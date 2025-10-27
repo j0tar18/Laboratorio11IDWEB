@@ -334,11 +334,12 @@ function Ejercicio12() {
                 const promedio = 0;
                 
                 for (let i = 0) {
-
+                    a;
                 }
+
                 let opcion2 = parseInt(prompt(
                     "1. Promedio"
-                ))
+                ));
         }
     }
 }
