@@ -1,6 +1,5 @@
 /*3. Calcular promedio con validación. Pide 5 notas y calcula el promedio, asegurándote de que estén entre 0 y 20*/
 
-
 function Ejercicio03() {
     let suma = 0;
 
@@ -466,4 +465,108 @@ function Ejercicio12() {
                 alert("Opción no válida. Por favor seleccione entre 1 y 4.");
         }
     }
+}
+
+/*13. Un supermercado desea una app que simule un carrito de compras muy simple
+El usuario puede agregar productos uno por uno, indicando sólo su precio, hasta que decida no continuar
+Al terminar, mostrar:
+    El total parcial a pagar
+    Si el total supera 100, mostrar el mensaje "Tiene un descuento del 10%" y aplicar el descuento
+    Si el total está entre 50 y 100, mostrar "Gana un cupón de 5%" y aplicar el descuento
+    Si el total es menor que 50, mostrar "No aplica descuento"
+    Finalmente, mostrar el total final a pagar*/
+
+function Ejercicio13() {
+    let continuar = true;
+    let sumaPrecios = 0;
+    let mensaje = ``;
+
+    while (continuar) {
+        let precio = parseFloat(prompt("Ingrese el precio del producto:"));
+
+        if (isNaN(precio) || precio <= 0) {
+            alert("Error. Debe ingresar un número positivo.");
+            continue;
+        }
+
+        sumaPrecios += precio;
+
+        let seguir = prompt("¿Desea continuar agregando productos? (Sí/No)").toLowerCase();
+
+        if (seguir === "si" || seguir === "sí") {
+            continuar = true;
+        } else {
+            continuar = false;
+        }
+    }
+    
+    let precioOriginal = sumaPrecios;
+    
+    if (sumaPrecios > 100) {
+        sumaPrecios *= 0.9;
+        mensaje = `Tiene un descuento del 10%\nPrecio original: $${precioOriginal.toFixed(2)}\nPrecio con descuento: $${sumaPrecios.toFixed(2)}`;
+    } else if (sumaPrecios >= 50) {
+        sumaPrecios *= 0.95;
+        mensaje = `Gana un cupón del 5%\nPrecio original: $${precioOriginal.toFixed(2)}\nPrecio con descuento: $${sumaPrecios.toFixed(2)}`;
+    } else {
+        mensaje = `No aplica descuento\nPrecio original: $${precioOriginal.toFixed(2)}`;
+    }
+
+    alert(mensaje);
+}
+
+/*14. Mismo ejercicio anterior, pero con un límite en su presupuesto. La app no deberá permitir que se pase del presupuesto y no
+deberá considerar el último producto*/
+
+function Ejercicio14() {
+    let continuar = true;
+    let sumaPrecios = 0;
+    let mensaje = ``;
+    let presupuesto = parseFloat(prompt("Ingrese su presupuesto:"));
+
+    if (isNaN(presupuesto) || presupuesto <= 0) {
+        alert("Error. El presupuesto debe ser positivo.");
+        return;
+    }
+
+    let presupuestoRestante = presupuesto;
+
+    while (continuar) {
+        let precio = parseFloat(prompt("Ingrese el precio del producto:"));
+
+        if (isNaN(precio) || precio <= 0) {
+            alert("Error. Debe ingresar un número positivo.");
+            continue;
+        }
+
+        if (precio > presupuestoRestante) {
+            alert(`El producto excede su presupuesto restante de $${presupuestoRestante.toFixed(2)}. No se agregará este producto.`);
+            break;
+        }
+
+        sumaPrecios += precio;
+        presupuestoRestante -= precio;
+
+        let seguir = prompt("¿Desea continuar agregando productos? (Sí/No)").toLowerCase();
+
+        if (seguir === "si" || seguir === "sí") {
+            continuar = true;
+        } else {
+            continuar = false;
+        }
+    }
+    
+    let precioOriginal = sumaPrecios;
+    
+    if (sumaPrecios > 100) {
+        sumaPrecios *= 0.9;
+        mensaje = `Tiene un descuento del 10%\nPrecio original: $${precioOriginal.toFixed(2)}\nPrecio con descuento: $${sumaPrecios.toFixed(2)}\nPresupuesto restante: $${presupuestoRestante.toFixed(2)}`;
+    } else if (sumaPrecios >= 50) {
+        sumaPrecios *= 0.95;
+        mensaje = `Gana un cupón del 5%\nPrecio original: $${precioOriginal.toFixed(2)}\nPrecio con descuento: $${sumaPrecios.toFixed(2)}\nPresupuesto restante: $${presupuestoRestante.toFixed(2)}`;
+    } else {
+        mensaje = `No aplica descuento\nPrecio total: $${precioOriginal.toFixed(2)}\nPresupuesto restante: $${presupuestoRestante.toFixed(2)}`;
+    }
+
+    alert(mensaje);
 }
