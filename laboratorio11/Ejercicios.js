@@ -63,7 +63,7 @@ function Ejercicio05() {
     let pares = 0;
     let impares = 0;
     let mensaje = "Números: ";
-   
+
     for (let i = 1; i <= 10; i++) {
         let numero = parseFloat(prompt("Ingrese número " + i + ":"));
 
@@ -317,29 +317,153 @@ function Ejercicio12() {
             "=== MENÚ DE OPCIONES ===\n" +
             "1. Calcular estadísticas de notas\n" +
             "2. Contar números pares e impares en un rango\n" +
-            "4. Generar una tabla de multiplicar\n" +
-            "3. Salir\n\n" +
+            "3. Generar una tabla de multiplicar\n" +
+            "4. Salir\n\n" +
             "Seleccione una opción:"
         ));
         
         switch (opcion) {
             case 1:
-                let cantidadNotas = parseInt(prompt("Ingrese la cantidad de notas q va a ingresar:"));
-                let mayor = 0;
-                let menor = 0;
-                let pares = 0;
-                let impares = 0;
-                let encimaPromedio = 0;
-
-                const promedio = 0;
+                let cantidadNotas = parseInt(prompt("Ingrese la cantidad de notas:"));
                 
-                for (let i = 0) {
-                    a;
+                if (isNaN(cantidadNotas) || cantidadNotas <= 0) {
+                    alert("Error. Ingrese un número válido mayor a 0.");
+                    break;
+                }
+
+                let notas = [];
+
+                for (let i = 1; i <= cantidadNotas; i++) {
+                    let nota = parseFloat(prompt(`Ingrese la nota ${i} (0-20):`));
+
+                    if (isNaN(nota) || nota < 0 || nota > 20) {
+                        alert("Error. Ingrese una nota válida entre 0 y 20.");
+                        i--;
+                        continue;
+                    }
+
+                    notas.push(nota);
                 }
 
                 let opcion2 = parseInt(prompt(
-                    "1. Promedio"
+                    "=== ESTADÍSTICAS DE NOTAS ===\n" +
+                    "1. Calcular promedio\n" + 
+                    "2. Valor máximo\n" +
+                    "3. Valor mínimo\n" + 
+                    "4. Cantidad de números pares e impares\n" +
+                    "5. Alumnos encima del promedio\n" +
+                    "6. Salir de opción 1\n\n" +
+                    "Seleccione una opción:"
                 ));
+
+                switch (opcion2) {
+                    case 1:
+                        let suma = 0;
+                        for (let nota of notas) {
+                            suma += nota;
+                        }
+                        let promedio = suma / cantidadNotas;
+                        alert(`El promedio es: ${promedio.toFixed(2)}`);
+                        break;
+
+                    case 2:
+                        let mayor = notas[0];
+                        for (let nota of notas) {
+                            if (nota > mayor) mayor = nota;
+                        }
+                        alert(`El valor máximo es: ${mayor}`);
+                        break;
+
+                    case 3:
+                        let menor = notas[0];
+                        for (let nota of notas) {
+                            if (nota < menor) menor = nota;
+                        }
+                        alert(`El valor mínimo es: ${menor}`);
+                        break;
+
+                    case 4:
+                        let pares = 0;
+                        let impares = 0;
+                        for (let nota of notas) {
+                            if (nota % 2 === 0) pares++;
+                            else impares++;
+                        }
+                        alert(`Notas pares: ${pares}\nNotas impares: ${impares}`);
+                        break;
+
+                    case 5:
+                        let sumaTotal = 0;
+                        for (let nota of notas) {
+                            sumaTotal += nota;
+                        }
+                        let promedioTotal = sumaTotal / cantidadNotas;
+                        let encimaPromedio = 0;
+                        for (let nota of notas) {
+                            if (nota > promedioTotal) encimaPromedio++;
+                        }
+                        alert(`Promedio: ${promedioTotal.toFixed(2)}\nAlumnos encima del promedio: ${encimaPromedio}`);
+                        break;
+
+                    case 6:
+                        alert("Saliendo de la opción 1...");
+                        break;
+
+                    default:
+                        alert("Opción no válida");
+                }
+                break;
+
+            case 2:
+                let num1 = parseInt(prompt("Ingrese el primer número del rango (a):"));
+                let num2 = parseInt(prompt("Ingrese el segundo número del rango (b):"));
+
+                if (isNaN(num1) || isNaN(num2)) {
+                    alert("Error. Ingrese números válidos.");
+                    break;
+                }
+
+                let a = Math.min(num1, num2);
+                let b = Math.max(num1, num2);
+                
+                let par = 0;
+                let impar = 0;
+
+                for (let i = a; i <= b; i++) {
+                    if (i % 2 === 0) par++;
+                    else impar++;
+                }
+                
+                alert(
+                    `Rango [${a}, ${b}]\n` + 
+                    `Cantidad de números pares: ${par}\n` +
+                    `Cantidad de números impares: ${impar}`
+                );
+                break;
+            
+            case 3:
+                let num = parseInt(prompt("Ingrese un número para generar su tabla de multiplicar:"));
+
+                if (isNaN(num)) {
+                    alert("Error. Número no válido.");
+                    break;
+                }
+
+                let tabla = `=== TABLA DE MULTIPLICAR DEL ${num} ===\n`;
+                for (let i = 1; i <= 12; i++) {
+                    tabla += `${num} x ${i} = ${num * i}\n`;
+                }
+                
+                alert(tabla);
+                break;
+
+            case 4:
+                alert("Saliendo...");
+                continuar = false;
+                break;
+
+            default:
+                alert("Opción no válida. Por favor seleccione entre 1 y 4.");
         }
     }
 }
